@@ -41,7 +41,7 @@ except LookupError:
 
 # Load API key from .env file (make sure to create one with OPENAI_API_KEY=<your_key>)
 load_dotenv()
-OPENAI_API_KEY = os.getenv("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")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class Chatbot:
     def __init__(self, faq_data):
