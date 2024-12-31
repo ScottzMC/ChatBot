@@ -47,7 +47,7 @@ chatbot_project/
 ```bash
 git clone https://github.com/<your-username>/ChatBot.git
 cd ChatBot
-
+```
 ### **2. Install Dependencies**
 
 python -m venv venv
