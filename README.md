@@ -48,14 +48,14 @@ chatbot_project/
 git clone https://github.com/<your-username>/ChatBot.git
 cd ChatBot
 
-### **2. Install Dependencies
+### **2. Install Dependencies**
 
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 .\venv\Scripts\activate   # Windows
 pip install -r requirements.txt
 
-### **3. Run the Application
+### **3. Run the Application**
 Start the flask server
 python app.py
 
