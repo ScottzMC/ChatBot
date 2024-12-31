@@ -1,47 +1,16 @@
 import nltk
-from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import openai
-import os
-from dotenv import load_dotenv
 
-from urllib.request import urlopen
-import socket
-
-# Increase timeout for downloads
-socket.setdefaulttimeout(1000)
-
-# Download required data
+# Download required NLTK data
 nltk.download('punkt')
-nltk.download('stopwords')
 nltk.download('wordnet')
+nltk.download('stopwords')
 
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    print("Downloading stopwords...")
-    nltk.download('stopwords')
-
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    print("Downloading punkt...")
-    nltk.download('punkt')
-
-try:
-    nltk.data.find('corpora/wordnet')
-except LookupError:
-    print("Downloading wordnet...")
-    nltk.download('wordnet')
-
-# Load API key from .env file (make sure to create one with OPENAI_API_KEY=<your_key>)
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class Chatbot:
     def __init__(self, faq_data):
@@ -56,9 +25,6 @@ class Chatbot:
         self.vectorizer = TfidfVectorizer()
         self.tfidf_matrix = self.vectorizer.fit_transform(self.questions)
         self.stop_words = set(stopwords.words('english'))
-
-        # Set OpenAI API key
-        openai.api_key = OPENAI_API_KEY
 
     def preprocess(self, text):
         """
@@ -86,37 +52,24 @@ class Chatbot:
             return self.answers[best_match_idx]
         return None
 
-    def openai_fallback(self, user_query):
-        """
-        Generate a response using OpenAI GPT when no FAQ match is found.
-        :param user_query: The user's input text.
-        :return: A response string from OpenAI GPT.
-        """
-        try:
-            response = openai.Completion.create(
-                model="text-davinci-003",
-                prompt=f"You are a helpful assistant. Answer the following: {user_query}",
-                max_tokens=150,
-                temperature=0.7,
-            )
-            return response['choices'][0]['text'].strip()
-        except Exception as e:
-            return "I'm having trouble connecting to the external system. Please try again later."
     def get_response(self, user_query):
         """
         Get the chatbot's response to a user query.
+        :param user_query: The user's input text.
+        :return: A response string.
         """
         response = self.find_best_match(user_query)
         if response:
             return response
-        # Fallback to OpenAI GPT if no match is found
-        return self.openai_fallback(user_query)
+        return "I'm sorry, I don't have an answer for that. Please try asking something else!"
 
-# Example FAQ data for testing
+
+# Example usage
 if __name__ == "__main__":
     faq = {
         "What is your name?": "I am a chatbot, here to assist you.",
-        "How can I help you?": "You can ask me questions about various topics."
+        "How can I help you?": "You can ask me questions about various topics.",
+        "What is Python?": "Python is a versatile programming language."
     }
 
     bot = Chatbot(faq)

@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, request, jsonify, render_template
 from chatbot import Chatbot
 
@@ -9,7 +7,8 @@ app = Flask(__name__)
 # Sample FAQ data
 faq = {
     "What is your name?": "I am a chatbot, here to assist you.",
-    "How can I help you?": "You can ask me questions about various topics."
+    "How can I help you?": "You can ask me questions about various topics.",
+    "What is Python?": "Python is a versatile programming language."
 }
 
 # Initialize Chatbot with FAQ data
@@ -39,4 +38,4 @@ def get_response():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True)
