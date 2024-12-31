@@ -8,6 +8,7 @@ app = Flask(__name__)
 faq = {
     "What is your name?": "I am a chatbot, here to assist you.",
     "How can I help you?": "You can ask me questions about various topics.",
+    "Do you know what today is?": "Not exactly sure",
     "What is Python?": "Python is a versatile programming language."
 }
 

@@ -10,7 +10,7 @@ import numpy as np
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('stopwords')
-
+nltk.download('punkt_tab')
 
 class Chatbot:
     def __init__(self, faq_data):
